@@ -1,0 +1,69 @@
+from datetime import datetime  # ✅ Importación necesaria
+
+# --- Datos simulados ---
+personas = [
+    ['12345678', 'Josie Pérez', 'propietario'],
+    ['23456789', 'Carlos Gómez', 'visitante'],
+    ['34567890', 'Caleb Rz', 'trabajador'],
+    ['45678901', 'Lucía Torres', 'visitante'],
+    ['56789012', 'Marta Silva', 'propietario'],
+    ['67890123', 'Jorge Linares', 'trabajador']
+]
+
+vehiculos = [
+    ['ABC123', 'Toyota', 'Corolla', 'rojo'],
+    ['XYZ789', 'Ford', 'Focus', 'azul'],
+    ['LMN456', 'Chevrolet', 'Spark', 'negro'],
+    ['GHJ321', 'Hyundai', 'Tucson', 'gris'],
+    ['QWE987', 'Kia', 'Rio', 'blanco'],
+    ['RTY654', 'Nissan', 'Versa', 'plateado']
+]
+
+# --- Verificación de persona ---
+def verificar_persona(dni):
+    for persona in personas:
+        if persona[0] == dni:
+            return True, f"✅ Persona encontrada: {persona[1]}, Tipo: {persona[2]}"
+    return False, "❌ Persona no registrada."
+
+# --- Verificación de vehículo ---
+def verificar_vehiculo(placa):
+    placa = placa.strip().upper()
+    for vehiculo in vehiculos:
+        if vehiculo[0] == placa:
+            return True, f"✅ Vehículo encontrado: {vehiculo[1]} {vehiculo[2]}, Color: {vehiculo[3]}"
+    return False, "❌ Vehículo no registrado."
+
+# --- Función principal ---
+def main():
+    print("\n=== VERIFICACIÓN DE INGRESO ===")
+
+    dni = input("Ingrese el número de DNI (8 dígitos): ").strip()
+    if not dni.isdigit() or len(dni) != 8:
+        print("❗ DNI inválido.")
+        return
+
+    placa = input("Ingrese la placa del vehículo: ").strip().upper()
+    if len(placa) < 5 or len(placa) > 10:
+        print("❗ Placa inválida.")
+        return
+
+    ahora = datetime.now()
+    fecha = ahora.strftime("%d/%m/%Y")
+    hora = ahora.strftime("%H:%M:%S")
+
+    persona_encontrada, mensaje_persona = verificar_persona(dni)
+    vehiculo_encontrado, mensaje_vehiculo = verificar_vehiculo(placa)
+
+    print("\n--- RESULTADO DE VERIFICACIÓN ---")
+    print(f"📅 Fecha: {fecha}")
+    print(f"🕒 Hora de ingreso: {hora}")
+    print(mensaje_persona)
+    print(mensaje_vehiculo)
+
+    if not persona_encontrada or not vehiculo_encontrado:
+        print("⚠️ Intervención de personal de seguridad")
+
+# ✅ Corrección: uso de __name__ y "__main__"
+if __name__ == "__main__":
+    main()
